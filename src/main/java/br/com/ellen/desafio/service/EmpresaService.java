@@ -32,10 +32,16 @@ public class EmpresaService {
 
 	public EmpresaDto insertEmpresa(@Valid EmpresaCreateUpdateDto empresaDto) {
 		ViaCepDto vc = viaCep.getAddress(empresaDto.getEndereco().getCep());
-		System.out.println(vc.getCep());
 		Endereco endereco = EnderecoMapper.ofDto(vc, empresaDto.getEndereco());
 		Empresa emp = EmpresaMapper.ofDto(empresaDto);
 		emp.setEndereco(endereco);
+		
+		boolean telefone = valida(emp.getTelefone());
+		System.out.println(telefone);
+		if (telefone==false) {
+			emp.setTelefone(null);
+		}
+		System.out.println(emp.getTelefone());
 		Empresa empSaved = empresaRepository.save(emp);
 		return EmpresaMapper.toDto(empSaved);
 	}
@@ -66,4 +72,7 @@ public class EmpresaService {
 		empresaRepository.deleteById(id);			
 	}
 
+	public boolean valida(String telefone) {
+		return telefone.matches("^\\((?:[14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$");
+	}
 }
