@@ -8,12 +8,15 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import br.com.ellen.desafio.integrationViaCep.ViaCep;
+import br.com.ellen.desafio.integrationViaCep.dto.ViaCepDto;
 import br.com.ellen.desafio.model.Empresa;
+import br.com.ellen.desafio.model.Endereco;
 import br.com.ellen.desafio.model.Funcionario;
 import br.com.ellen.desafio.model.dto.EmpresaCreateUpdateDto;
 import br.com.ellen.desafio.model.dto.EmpresaDto;
 import br.com.ellen.desafio.model.dto.FuncionarioDto;
 import br.com.ellen.desafio.model.mapper.EmpresaMapper;
+import br.com.ellen.desafio.model.mapper.EnderecoMapper;
 import br.com.ellen.desafio.repository.EmpresaRepository;
 
 @Service
@@ -28,10 +31,11 @@ public class EmpresaService {
 	}
 
 	public EmpresaDto insertEmpresa(@Valid EmpresaCreateUpdateDto empresaDto) {
-		System.out.println(empresaDto);
+		ViaCepDto vc = viaCep.getAddress(empresaDto.getEndereco().getCep());
+		System.out.println(vc.getCep());
+		Endereco endereco = EnderecoMapper.ofDto(vc, empresaDto.getEndereco());
 		Empresa emp = EmpresaMapper.ofDto(empresaDto);
-		System.out.println(emp);
-		System.out.println(empresaRepository);
+		emp.setEndereco(endereco);
 		Empresa empSaved = empresaRepository.save(emp);
 		return EmpresaMapper.toDto(empSaved);
 	}
@@ -46,9 +50,14 @@ public class EmpresaService {
 		return funcionarios.stream().map(FuncionarioDto::new).collect(Collectors.toList());
 	}
 	
-	public EmpresaDto updateEmpresa(Long id, @Valid EmpresaCreateUpdateDto dto) {
+	public EmpresaDto updateEmpresa(Long id, @Valid EmpresaCreateUpdateDto empresaDto) {
 		Empresa emp = empresaRepository.getById(id);
-		EmpresaMapper.merge(emp, dto);
+		
+		ViaCepDto vc = viaCep.getAddress(empresaDto.getEndereco().getCep());
+		Endereco endereco = EnderecoMapper.ofDto(vc, empresaDto.getEndereco());
+		emp.setEndereco(endereco);
+		
+		EmpresaMapper.merge(emp, empresaDto);
 		Empresa empSaved = empresaRepository.save(emp);
 		return EmpresaMapper.toDto(empSaved);
 	}

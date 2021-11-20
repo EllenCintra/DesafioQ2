@@ -12,4 +12,34 @@ public class ViaCepDto {
 	private String siafi;
 	private String gia;
 	private String cep;
+	public String getUf() {
+		return uf;
+	}
+	public String getComplemento() {
+		return complemento;
+	}
+	public String getDdd() {
+		return ddd;
+	}
+	public String getLogradouro() {
+		return logradouro;
+	}
+	public String getBairro() {
+		return bairro;
+	}
+	public String getLocalidade() {
+		return localidade;
+	}
+	public String getIbge() {
+		return ibge;
+	}
+	public String getSiafi() {
+		return siafi;
+	}
+	public String getGia() {
+		return gia;
+	}
+	public String getCep() {
+		return cep;
+	}
 }

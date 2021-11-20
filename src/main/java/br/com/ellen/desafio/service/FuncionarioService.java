@@ -33,8 +33,6 @@ public class FuncionarioService {
 		Cargo cargo = cargoRepository.findByName(dto.getCargo().getName());
 		funcionario.setEmpresa(emp);
 		funcionario.setCargo(cargo);
-		System.out.println(funcionario.getSalario());
-		System.out.println(dto.getSalario());
 		Funcionario funSaved = funcionarioRepository.save(funcionario);
 		return FuncionarioMapper.toDto(funSaved);
 	}
