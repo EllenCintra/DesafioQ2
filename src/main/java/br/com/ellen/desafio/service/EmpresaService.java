@@ -37,7 +37,7 @@ public class EmpresaService {
 		Empresa emp = EmpresaMapper.ofDto(empresaDto);
 		emp.setEndereco(endereco);
 		
-		boolean telefone = valida(emp.getTelefone());
+		boolean telefone = telefoneValido(emp.getTelefone());
 		System.out.println(telefone);
 		if (telefone==false) {
 			emp.setTelefone(null);
@@ -78,7 +78,8 @@ public class EmpresaService {
 		empresaRepository.deleteById(id);			
 	}
 
-	public boolean valida(String telefone) {
+	//Para ser válido o telefone deve estar no formato "(11) 1111-1111" ou "(11) 11111-1111"
+	public boolean telefoneValido(String telefone) {
 		return telefone.matches("^\\((?:[14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$");
 	}
 }
