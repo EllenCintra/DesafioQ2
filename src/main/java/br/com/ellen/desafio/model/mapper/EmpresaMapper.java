@@ -3,6 +3,7 @@ package br.com.ellen.desafio.model.mapper;
 import javax.validation.Valid;
 
 import br.com.ellen.desafio.model.Empresa;
+import br.com.ellen.desafio.model.dto.EmpresaConsultaDto;
 import br.com.ellen.desafio.model.dto.EmpresaCreateUpdateDto;
 import br.com.ellen.desafio.model.dto.EmpresaDto;
 
@@ -21,6 +22,10 @@ public class EmpresaMapper {
 
 	public static EmpresaDto toDto(Empresa empresa) {
 		return new EmpresaDto(empresa);
+	}
+	
+	public static EmpresaConsultaDto toConsultaDto(Empresa empresa) {
+		return new EmpresaConsultaDto(empresa);
 	}
 
 }

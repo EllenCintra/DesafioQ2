@@ -12,6 +12,7 @@ import br.com.ellen.desafio.integrationViaCep.dto.ViaCepDto;
 import br.com.ellen.desafio.model.Empresa;
 import br.com.ellen.desafio.model.Endereco;
 import br.com.ellen.desafio.model.Funcionario;
+import br.com.ellen.desafio.model.dto.EmpresaConsultaDto;
 import br.com.ellen.desafio.model.dto.EmpresaCreateUpdateDto;
 import br.com.ellen.desafio.model.dto.EmpresaDto;
 import br.com.ellen.desafio.model.dto.FuncionarioDto;
@@ -44,6 +45,11 @@ public class EmpresaService {
 		System.out.println(emp.getTelefone());
 		Empresa empSaved = empresaRepository.save(emp);
 		return EmpresaMapper.toDto(empSaved);
+	}
+	
+	public List<EmpresaConsultaDto> listEmpresas() {
+		List<Empresa> empresas = empresaRepository.findAll();
+		return empresas.stream().map(EmpresaConsultaDto::new).collect(Collectors.toList());
 	}
 	
 	public EmpresaDto getEmpresa(Long id) {
