@@ -1,5 +1,8 @@
 package br.com.ellen.desafio.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Service;
@@ -27,9 +30,9 @@ public class FuncionarioService {
 		this.cargoRepository = c;
 	}
 
-	public FuncionarioDto insertFuncionario(Long id, @Valid FuncionarioCreateDto dto) {
+	public FuncionarioDto insertFuncionario(@Valid FuncionarioCreateDto dto) {
 		Funcionario funcionario = FuncionarioMapper.ofDto(dto);
-		Empresa emp = empresaRepository.getById(id);
+		Empresa emp = empresaRepository.getById(dto.getEmpresa().getId());
 		Cargo cargo = cargoRepository.findByName(dto.getCargo().getName());
 		funcionario.setEmpresa(emp);
 		funcionario.setCargo(cargo);
@@ -45,6 +48,11 @@ public class FuncionarioService {
 			return FuncionarioMapper.toDto(funcionario);
 		} else
 			return null;
+	}
+	
+	public List<FuncionarioDto> listFuncionarios(Long id) {
+		List<Funcionario> funcionarios = empresaRepository.getById(id).getFuncionarios();
+		return funcionarios.stream().map(FuncionarioDto::new).collect(Collectors.toList());
 	}
 
 	public FuncionarioDto updateFuncionario(Long id, Long idF, @Valid FuncionarioDto dto) {

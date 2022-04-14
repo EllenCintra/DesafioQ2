@@ -19,7 +19,7 @@ import br.com.ellen.desafio.model.dto.FuncionarioDto;
 import br.com.ellen.desafio.service.FuncionarioService;
 
 @RestController
-@RequestMapping("empresa/{id}/funcionario")
+@RequestMapping("empresa/funcionario")
 public class FuncionarioController {
 	
 	private FuncionarioService funcionarioService;
@@ -29,14 +29,15 @@ public class FuncionarioController {
 	}
 
 	@PostMapping
-	public ResponseEntity<FuncionarioDto> insertFuncionario (@PathVariable Long id, @RequestBody @Valid FuncionarioCreateDto funcionarioDto) {
-		return new ResponseEntity<FuncionarioDto>(funcionarioService.insertFuncionario(id, funcionarioDto), HttpStatus.CREATED);
+	public ResponseEntity<FuncionarioDto> insertFuncionario (@RequestBody @Valid FuncionarioCreateDto funcionarioDto) {
+		return new ResponseEntity<FuncionarioDto>(funcionarioService.insertFuncionario(funcionarioDto), HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/{idF}")
 	public FuncionarioDto funcionario(@PathVariable Long id, @PathVariable Long idF) {
 		return funcionarioService.getFuncionario(id, idF);		
 	}
+	
 	
 	@PutMapping("/{idF}")
 	@Transactional

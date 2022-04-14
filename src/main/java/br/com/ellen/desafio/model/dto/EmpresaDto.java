@@ -9,6 +9,7 @@ import br.com.ellen.desafio.model.mapper.EnderecoMapper;
 
 public class EmpresaDto {
 	
+	private Long id;
 	private String name;
 	private EnderecoDto endereco;
 	private String  telefone;
@@ -18,10 +19,15 @@ public class EmpresaDto {
 		
 	}
 	public EmpresaDto(Empresa empresa) {
+		
+		this.id = empresa.getId();
 		this.name = empresa.getname();
 		this.endereco = EnderecoMapper.toDto(empresa.getEndereco());
 		this.telefone = empresa.getTelefone();
 		this.funcionarios = empresa.getFuncionarios().stream().map(FuncionarioDto::new).collect(Collectors.toList());
+	}
+	public long getId() {
+		return id;
 	}
 	public String getName() {
 		return name;

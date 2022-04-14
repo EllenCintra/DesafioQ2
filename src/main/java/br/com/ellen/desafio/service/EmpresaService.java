@@ -38,11 +38,9 @@ public class EmpresaService {
 		emp.setEndereco(endereco);
 		
 		boolean telefone = telefoneValido(emp.getTelefone());
-		System.out.println(telefone);
 		if (telefone==false) {
 			emp.setTelefone(null);
 		}
-		System.out.println(emp.getTelefone());
 		Empresa empSaved = empresaRepository.save(emp);
 		return EmpresaMapper.toDto(empSaved);
 	}

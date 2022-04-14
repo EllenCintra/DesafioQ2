@@ -7,6 +7,8 @@ public class EmpresaConsultaDto {
 	private long id;
 	private String name;
 	
+	public EmpresaConsultaDto() {}
+	
 	public EmpresaConsultaDto(Empresa empresa) {
 		this.id = empresa.getId();
 		this.name = empresa.getname();

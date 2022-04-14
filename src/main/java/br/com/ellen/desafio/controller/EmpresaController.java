@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.ellen.desafio.model.dto.EmpresaConsultaDto;
 import br.com.ellen.desafio.model.dto.EmpresaCreateUpdateDto;
 import br.com.ellen.desafio.model.dto.EmpresaDto;
+import br.com.ellen.desafio.model.dto.FuncionarioDto;
 import br.com.ellen.desafio.service.EmpresaService;
 
 @RestController
@@ -41,6 +42,11 @@ public class EmpresaController {
 	@GetMapping
 	public List<EmpresaConsultaDto> listEmpresas() {
 		return empresaService.listEmpresas();		
+	}
+	
+	@GetMapping("/{id}/funcionarios")
+	public List<FuncionarioDto> getFuncionarioByEmpresa(@PathVariable Long id) {
+		return empresaService.listFuncionarios(id);		
 	}
 	
 	@GetMapping("/{id}")
